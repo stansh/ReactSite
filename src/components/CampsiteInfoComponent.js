@@ -3,9 +3,12 @@ import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reac
 
 class Campsiteinfo extends Component {
 
+
+/* renderCampsite method*/
+
     renderCampsite(campsite){
        return (
-           <div className >
+           <div  >
                <Card>
                     <CardImg top src={this.props.campsite.image} alt={this.props.campsite.name} />
                     <CardBody>
@@ -17,29 +20,41 @@ class Campsiteinfo extends Component {
        )
     }
     
-    renderComments(comments) {
-        if (comments) {
+
+
+/* renderComments method*/
+
+    renderComments(comment) {
+        if(this.props.campsite.comments) {  /* if(comments) by itslef won't work */
              return (
-                 <div className = "col-md-5 m-1">
+                 <div >
                      <h4>Comments</h4>
-                     {this.props.campsite.comments.map (comment yarn=> 
-                        { return 
-                            (<div>
-                                {comment.id}
-                            </div>)
-                        }                                           
-                    )} 
+                     {this.props.campsite.comments.map (a =>
+                       { return (
+                                <div key={a.id} >  {/*  Fixing the error - Each child in a list should have a unique "key" prop. */}
+                                    <p>
+                                        {a.text} <br />
+                                        <span>--</span>{a.author}<span>, </span>    {/*  text editing */}
+                                        {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(a.date)))} {/* date formatting */}
+                                    </p>
+                              </div>                         
+                                )}
+                     )}
+                                                       
                  </div>
              )
-        }
+        } 
+        return <div></div>
     }
 
+
+/* render for the Component */
 
     render () {
         if(this.props.campsite) {
             return (
                 <div>
-                    {this.renderCampsite()}
+                    {this.renderCampsite()}  {/* calling the methods */}
                     {this.renderComments()}
                 </div>
             );
