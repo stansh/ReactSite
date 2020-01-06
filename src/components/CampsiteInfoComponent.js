@@ -8,9 +8,9 @@ class Campsiteinfo extends Component {
 
     renderCampsite(campsite){
        return (
-           <div  >
-               <Card>
-                    <CardImg top src={this.props.campsite.image} alt={this.props.campsite.name} />
+           <div className = "col-md-5 m-1">
+               <Card >
+                    <CardImg  top src={this.props.campsite.image} alt={this.props.campsite.name} />
                     <CardBody>
                         <CardTitle>{this.props.campsite.name}</CardTitle>
                         <CardText>{this.props.campsite.description}</CardText>
@@ -27,7 +27,7 @@ class Campsiteinfo extends Component {
     renderComments(comment) {
         if(this.props.campsite.comments) {  /* if(comments) by itslef won't work */
              return (
-                 <div >
+                 <div className = "col-md-5 m-1" >
                      <h4>Comments</h4>
                      {this.props.campsite.comments.map (a =>
                        { return (
@@ -53,9 +53,11 @@ class Campsiteinfo extends Component {
     render () {
         if(this.props.campsite) {
             return (
-                <div>
-                    {this.renderCampsite()}  {/* calling the methods */}
-                    {this.renderComments()}
+                <div className = "container">
+                    <div className = "row">
+                        {this.renderCampsite()}  {/* calling the methods */}
+                        {this.renderComments()}
+                    </div>
                 </div>
             );
         } else {
