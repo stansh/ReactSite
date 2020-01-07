@@ -1,35 +1,35 @@
-import React, { Component } from "react";
+import React from "react";
 import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reactstrap';
 
-class Campsiteinfo extends Component {
 
 
-/* renderCampsite method*/
 
-    renderCampsite(campsite){
+/* RenderCampsite component*/
+
+function RenderCampsite({campsite}){
        return (
            <div className = "col-md-5 m-1">
                <Card >
-                    <CardImg  top src={this.props.campsite.image} alt={this.props.campsite.name} />
+                    <CardImg  top src={campsite.image} alt={campsite.name} />
                     <CardBody>
-                        <CardTitle>{this.props.campsite.name}</CardTitle>
-                        <CardText>{this.props.campsite.description}</CardText>
+                        <CardTitle>{campsite.name}</CardTitle>
+                        <CardText>{campsite.description}</CardText>
                     </CardBody>
                 </Card>
            </div>
-       )
+       );
     }
     
 
 
-/* renderComments method*/
+/* RenderComments component*/
 
-    renderComments(comment) {
-        if(this.props.campsite.comments) {  /* if(comments) by itslef won't work */
+   function RenderComments({comments}) {
+        if(comments) {  /* if(comments) by itslef won't work */
              return (
                  <div className = "col-md-5 m-1" >
                      <h4>Comments</h4>
-                     {this.props.campsite.comments.map (a =>
+                     {comments.map (a =>
                        { return (
                                 <div key={a.id} >  {/*  Fixing the error - Each child in a list should have a unique "key" prop. */}
                                     <p>
@@ -42,28 +42,28 @@ class Campsiteinfo extends Component {
                      )}
                                                        
                  </div>
-             )
+             );
         } 
         return <div></div>
     }
 
 
-/* render for the Component */
+/* CampsiteInfo component */
 
-    render () {
-        if(this.props.campsite) {
+    function CampsiteInfo (props) {
+        if(props.campsite) {
             return (
                 <div className = "container">
                     <div className = "row">
-                        {this.renderCampsite()}  {/* calling the methods */}
-                        {this.renderComments()}
+                    <RenderCampsite campsite={props.campsite} />
+                    <RenderComments comments={props.campsite.comments} />
                     </div>
                 </div>
             );
         } else {
-           return (<div></div>);
+           return <div />;
         }
     }
-}
 
-export default Campsiteinfo;
+
+export default CampsiteInfo;
