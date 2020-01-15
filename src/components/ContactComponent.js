@@ -22,8 +22,8 @@ class Contact extends Component {
             }
         };
 
-        this.handleInputChange = this.handleInputChange.bind(this);// reference to the handleInputChange(event) method; updates the state properties
-        this.handleSubmit = this.handleSubmit.bind(this);// reference to the handleSubmit(event) method; updates the string in console log and alert message
+        this.handleInputChange = this.handleInputChange.bind(this);// the last THIS is bound to handleInputChange() method; updates the state properties
+        this.handleSubmit = this.handleSubmit.bind(this);// the last THIS is bound to handleSubmit() method; updates the string in console log and alert message
     }
     
 
