@@ -11,7 +11,7 @@ import About from './AboutComponent';
 import { connect } from 'react-redux';
 
 
-const mapStateToProps = state => {
+const mapStateToProps = state => { //receives entire state tree and returns an object that contains only the data needed by the component
     return {
         campsites: state.campsites,
         comments: state.comments,
@@ -29,9 +29,9 @@ class Main extends Component {
         const HomePage = () => {
             return (
                 <Home
-                campsite={this.props.campsites.filter(campsite => campsite.featured)[0]}
-                promotion={this.props.promotions.filter(promotion => promotion.featured)[0]}
-                partner={this.props.partners.filter(partner => partner.featured)[0]}
+                campsite={this.props.campsites.filter(campsite => campsite.featured)[0]} // mapStateToProps 
+                promotion={this.props.promotions.filter(promotion => promotion.featured)[0]} // mapStateToProps 
+                partner={this.props.partners.filter(partner => partner.featured)[0]}// mapStateToProps 
             />
             );
         }
@@ -39,8 +39,8 @@ class Main extends Component {
         const CampsiteWithId = ({match}) => {
             return (
                 <CampsiteInfo 
-                    campsite={this.props.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
-                    comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
+                    campsite={this.props.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]} // mapStateToProps 
+                    comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)} // mapStateToProps 
                 />
             );
         };
@@ -50,7 +50,7 @@ class Main extends Component {
                 <Header />
                 <Switch>
                     <Route path='/home' component={HomePage} />
-                    <Route exact path='/directory' render={() => <Directory campsites={this.props.campsites} />} />
+                    <Route exact path='/directory' render={() => <Directory campsites={this.props.campsites} />} /> 
                     <Route path='/directory/:campsiteId' component={CampsiteWithId} />
                     <Route exact path='/contactus' component={Contact} />
                     <Route path='/aboutus' render = {()=> <About partners={this.props.partners} />} />
@@ -62,4 +62,4 @@ class Main extends Component {
     };
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps)(Main));   // allows the Main component to take it State from the Redux store; withRouter added for react-router to still be able to work with these changes to the export
