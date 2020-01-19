@@ -4,8 +4,8 @@ import { Breadcrumb, BreadcrumbItem,
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
-const required = val => val && val.length;   //val?
-const maxLength = len => val => !val || (val.length <= len);  //len
+const required = val => val && val.length;   
+const maxLength = len => val => !val || (val.length <= len);  
 const minLength = len => val => val && (val.length >= len);
 const isNumber = val => !isNaN(+val);
 const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
@@ -35,7 +35,7 @@ class Contact extends Component {
 
 
     handleSubmit(values) {
-        console.log("Current state is: " + JSON.stringify(values));
+        console.log("Current state is: " + JSON.stringify(values)); // JSON.stringify converts an object to flattened text string
         alert("Current state is: " + JSON.stringify(values));
     }
 
