@@ -1,11 +1,18 @@
-import { createStore } from 'redux';
-import { Reducer, initialState } from './reducer';
+import {createStore, combineReducers} from 'redux';
+import { Campsites } from './campsites';
+import { Comments } from './comments';
+import { Partners } from './partners';
+import { Promotions } from './promotions';
 
-export const ConfigureStore = () => {
-    const store = createStore(   // this is a Redux function that creates a store which holds the state as an object tree
-        Reducer,
-        initialState
+export const ConfigureStore = () => {  
+    const store = createStore(
+        combineReducers({ //multiple reducers combined here because ConfigureStore takes only one reducer
+            campsites: Campsites,
+            comments: Comments,
+            partners: Partners,
+            promotions: Promotions
+        })
     );
 
     return store;
-};
+}
