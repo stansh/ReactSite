@@ -10,6 +10,7 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
 import { connect } from 'react-redux';
+import { addComment } from '../redux/ActionCreators';
 
 
 const mapStateToProps = state => { //receives entire state tree and returns an object that contains only the data needed by the component
@@ -21,7 +22,9 @@ const mapStateToProps = state => { //receives entire state tree and returns an o
     };
 };
 
-
+const mapDispatchToProps = {
+    addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text))
+};
 
 
 class Main extends Component {
@@ -40,8 +43,9 @@ class Main extends Component {
         const CampsiteWithId = ({match}) => {
             return (
                 <CampsiteInfo 
-                    campsite={this.props.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]} // mapStateToProps 
-                    comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)} // mapStateToProps 
+                    campsite={this.props.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]} 
+                    comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
+                    addComment={this.props.addComment} /* addComment action creator */
                 />
             );
         };
@@ -63,4 +67,4 @@ class Main extends Component {
     };
 }
 
-export default withRouter(connect(mapStateToProps)(Main));   // allows the Main component to take it State from the Redux store; withRouter added for react-router to still be able to work with these changes to the export
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));   // allows the Main component to take it State from the Redux store; withRouter added for react-router to still be able to work with these changes to the export

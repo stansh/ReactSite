@@ -27,7 +27,7 @@ function RenderCampsite({campsite}){
 
 /* RenderComments component*/
 
-   function RenderComments({comments}) {
+   function RenderComments({comments, addComment, campsiteId}) {
         if(comments) {  /* if(comments) by itslef won't work */
              return (
                  <div className = "col-md-5 m-1" >
@@ -43,7 +43,7 @@ function RenderCampsite({campsite}){
                               </div>                         
                                 )}
                      )}
-                     <CommentForm/>
+                     <CommentForm campsiteId={campsiteId} addComment={addComment} />
                                                     
                  </div>
              );
@@ -70,7 +70,11 @@ function RenderCampsite({campsite}){
                 </div>
                 <div className="row">
                     <RenderCampsite campsite={props.campsite} />
-                    <RenderComments comments={props.comments} />
+                    <RenderComments 
+                        comments={props.comments}
+                        addComment={props.addComment}
+                        campsiteId={props.campsite.id}
+                    />
                     
                     
                 </div>
@@ -101,11 +105,10 @@ function RenderCampsite({campsite}){
             };
         }
     
-       handleSubmit(values) {
-        console.log("Current state is: " + JSON.stringify(values)); // JSON.stringify converts an object to flattened text string
-        alert("Current state is: " + JSON.stringify(values));
-        this.toggleModal()
-       }
+        handleSubmit(values) {
+            this.toggleModal();
+            this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
+        }
 
         toggleModal() {
             this.setState({
