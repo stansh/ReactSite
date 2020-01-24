@@ -29,7 +29,7 @@ function RenderCampsite({campsite}){
 
 /* RenderComments component*/
 
-   function RenderComments({comments, addComment, campsiteId}) {
+function RenderComments({comments, postComment, campsiteId}) {
         if(comments) {  /* if(comments) by itslef won't work */
              return (
                  <div className = "col-md-5 m-1" >
@@ -45,7 +45,7 @@ function RenderCampsite({campsite}){
                               </div>                         
                                 )}
                      )}
-                     <CommentForm campsiteId={campsiteId} addComment={addComment} />
+                     <CommentForm campsiteId={campsiteId} postComment={postComment} />
                                                     
                  </div>
              );
@@ -95,7 +95,7 @@ function RenderCampsite({campsite}){
                     <RenderCampsite campsite={props.campsite} />
                     <RenderComments 
                         comments={props.comments}
-                        addComment={props.addComment}
+                        postComment={props.postComment} 
                         campsiteId={props.campsite.id}
                     />
                     
@@ -130,7 +130,7 @@ function RenderCampsite({campsite}){
     
         handleSubmit(values) {
             this.toggleModal();
-            this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
+            this.props.postComment(this.props.campsiteId, values.rating, values.author, values.text);
         }
 
         toggleModal() {
