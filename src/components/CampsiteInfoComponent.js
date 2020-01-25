@@ -34,7 +34,7 @@ function RenderCampsite({campsite}){
     
 
 
-/* RenderComments component*/
+/* RenderComments component */
 
 function RenderComments({comments, postComment, campsiteId}) {
         if(comments) {  /* if(comments) by itslef won't work */
