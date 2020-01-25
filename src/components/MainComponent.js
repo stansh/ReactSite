@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
+
 import Directory from './DirectoryComponent';
 import CampsiteInfo from './CampsiteInfoComponent';
-import CommentForm from './CampsiteInfoComponent';
+
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
@@ -11,7 +11,7 @@ import Contact from './ContactComponent';
 import About from './AboutComponent';
 import { connect } from 'react-redux';
 import { postComment, fetchCampsites, fetchComments, fetchPromotions } from '../redux/ActionCreators';
-import { actions } from 'react-redux-form';
+import { actions } from 'react-redux-form'; //  makes an action creator actions.reset available
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
@@ -24,6 +24,7 @@ const mapStateToProps = state => { //receives entire state tree and returns an o
     };
 };
 
+// this makes action creators available to the main components as props
 const mapDispatchToProps = {
     postComment: (campsiteId, rating, author, text) => (postComment(campsiteId, rating, author, text)),
     fetchCampsites: () => (fetchCampsites()),
@@ -47,9 +48,9 @@ class Main extends Component {
         const HomePage = () => {
             return (
                 <Home
-                    campsite={this.props.campsites.campsites.filter(campsite => campsite.featured)[0]}
-                    campsitesLoading={this.props.campsites.isLoading}
-                    campsitesErrMess={this.props.campsites.errMess}
+                    campsite={this.props.campsites.campsites.filter(campsite => campsite.featured)[0]} //the state from Campsites reducer
+                    campsitesLoading={this.props.campsites.isLoading} //the state from Campsites reducer
+                    campsitesErrMess={this.props.campsites.errMess} //the state from Campsites reducer
                     partner={this.props.partners.filter(partner => partner.featured)[0]}
                     promotion={this.props.promotions.promotions.filter(promotion => promotion.featured)[0]}
                     promotionLoading={this.props.promotions.isLoading}
@@ -61,9 +62,9 @@ class Main extends Component {
         const CampsiteWithId = ({match}) => {
             return (
                 <CampsiteInfo 
-                    campsite={this.props.campsites.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
-                    isLoading={this.props.campsites.isLoading}
-                    errMess={this.props.campsites.errMess}
+                    campsite={this.props.campsites.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]} //the state from Campsites reducer
+                    isLoading={this.props.campsites.isLoading} //the state from Campsites reducer
+                    errMess={this.props.campsites.errMess} //the state from Campsites reducer
                     comments={this.props.comments.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
                     commentsErrMess={this.props.comments.errMess}
                     postComment={this.props.postComment}
@@ -75,8 +76,9 @@ class Main extends Component {
         return (
             <div>
                 <Header />
-                <TransitionGroup>
-                    <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+                <TransitionGroup>  
+               
+                    <CSSTransition key={this.props.location.key} classNames="page" timeout={300}> 
                         <Switch>
                             <Route path='/home' component={HomePage} />
                             <Route exact path='/directory' render={() => <Directory campsites={this.props.campsites} />} />

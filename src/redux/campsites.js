@@ -1,7 +1,7 @@
 /* import { CAMPSITES } from '../shared/campsites'; */
 import * as ActionTypes from './ActionTypes';
 
-export const Campsites = (state = {
+export const Campsites = (state = { //a reducer function has two parameters: state and action
     isLoading: true,
     errMess: null,
     campsites: []

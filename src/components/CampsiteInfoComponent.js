@@ -1,5 +1,5 @@
 import React,{ Component }  from "react";
-import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem,Button,Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label,Row,Col } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem,Button,Modal, ModalHeader, ModalBody, Label,Row,Col } from 'reactstrap';
 import { Link, } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
@@ -41,10 +41,10 @@ function RenderComments({comments, postComment, campsiteId}) {
              return (
                  <div className = "col-md-5 m-1" >
                     <h4>Comments</h4>
-                    <Stagger in>
+                    <Stagger in> 
                         {comments.map(comment => {
                             return (
-                                <Fade in key={comment.id}>
+                                <Fade in key={comment.id}> 
                                     <div>
                                         <p>{comment.text}<br />
                                             -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
@@ -68,7 +68,7 @@ function RenderComments({comments, postComment, campsiteId}) {
     function CampsiteInfo (props) {
         if (props.isLoading) {
             return (
-                <div className="container">
+                <div className="container"> {/* repeat Bootstrap grid set-up (container, row) of elements that are supposed to be loader; scroll down */}
                     <div className="row">
                         <Loading />
                     </div>

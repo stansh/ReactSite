@@ -1,4 +1,4 @@
-import * as ActionTypes from './ActionTypes';
+import * as ActionTypes from './ActionTypes';  // * - imports all exports (ActionTypes) from specified file
 import { baseUrl } from '../shared/baseUrl';
 
 // the action (action creator) of adding a comment
@@ -12,29 +12,30 @@ import { baseUrl } from '../shared/baseUrl';
 //     }
 // });
 
-export const fetchCampsites = () => dispatch => {
-    dispatch(campsitesLoading());
+export const fetchCampsites = () => dispatch => { // arrow function inside an arrow function (redux-thunk enables that)
+    dispatch(campsitesLoading()); //dispatches  campsitesLoading action
 
-    return fetch(baseUrl + 'campsites')
+    return fetch(baseUrl + 'campsites') // location of  the resource
     .then(response => {
-            if (response.ok) {
+            if (response.ok) { // true if HTTP response status cose is within 200 - 299
                  return response;
             } else {
-                const error = new Error(`Error ${response.status}: ${response.statusText}`);                error.response = response;
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);  // bad response from server  
+                error.response = response;
                 throw error;
             }
         },
-        error => {
+        error => { // no response from server at all
             const errMess = new Error(error.message);
             throw errMess;
         }
     )
-    .then(response => response.json())
+    .then(response => response.json()) // converts data to JS
     .then(campsites => dispatch(addCampsites(campsites)))
     .catch(error => dispatch(campsitesFailed(error.message)));
 };
 
-export const campsitesLoading = () => ({
+export const campsitesLoading = () => ({ //dispatched from fetchCampsites function; 
     type: ActionTypes.CAMPSITES_LOADING
 });
 
@@ -48,13 +49,16 @@ export const addCampsites = campsites => ({
     payload: campsites
 });
 
+//fetching comments
+
 export const fetchComments = () => dispatch => {    
     return fetch(baseUrl + 'comments')
     .then(response => {
             if (response.ok) {
                 return response;
             } else {
-                const error = new Error(`Error ${response.status}: ${response.statusText}`);                error.response = response;
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);        
+                error.response = response;
                 throw error;
             }
         },
@@ -63,7 +67,7 @@ export const fetchComments = () => dispatch => {
             throw errMess;
         }
     )
-    .then(response => response.json())
+    .then(response => response.json()) // array of comments received/fetched
     .then(comments => dispatch(addComments(comments)))
     .catch(error => dispatch(commentsFailed(error.message)));
 };
@@ -84,6 +88,8 @@ export const addComment = comment => ({
     payload: comment
 });
 
+//posting a comment to the server
+
 export const postComment = (campsiteId, rating, author, text) => dispatch => {
     
     const newComment = {
@@ -95,10 +101,10 @@ export const postComment = (campsiteId, rating, author, text) => dispatch => {
     newComment.date = new Date().toISOString();
 
     return fetch(baseUrl + 'comments', {
-            method: "POST",
+            method: "POST", //by default the HTTP request method is "GET"
             body: JSON.stringify(newComment),
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json" // so the server knows that the body will be formated as JSON
             }
         })
         .then(response => {
@@ -120,6 +126,7 @@ export const postComment = (campsiteId, rating, author, text) => dispatch => {
         });
 };
 
+//fetching promotions
 
 export const fetchPromotions = () => (dispatch) => {
     

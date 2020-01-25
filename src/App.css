@@ -41,12 +41,12 @@ h2 {
   background-color: #901CAD;
 }
 
-.page-enter {
+.page-enter {  /* similiar to first keyframe */
   opacity: 0;
   transform: translateX(-100%);
 }
 
-.page-enter-active {
+.page-enter-active {  /* similiar to second keyframe */
   opacity: 1;
   transform: translateX(0%);
   transition: 300ms ease-out;

@@ -1,6 +1,7 @@
 import * as ActionTypes from './ActionTypes';
 
 // this reducer adds new comment to Comments array; updates Comments portion of the state
+
 export const Comments = (state = { errMess: null, comments: []}, action) => {
     switch (action.type) {
         case ActionTypes.ADD_COMMENTS:
@@ -11,7 +12,7 @@ export const Comments = (state = { errMess: null, comments: []}, action) => {
 
         case ActionTypes.ADD_COMMENT:
             const comment = action.payload;    
-            return {...state, comments: state.comments.concat(comment)};
+            return {...state, comments: state.comments.concat(comment)}; //export const Comments = (state = { errMess: null, comments: []}..
 
         default:
             return state;
