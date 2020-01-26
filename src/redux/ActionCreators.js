@@ -168,7 +168,10 @@ export const addPromotions = promotions => ({
 
 
 // fetch partners
-export const fetchPartners = () => dispatch => {
+export const fetchPartners = () => (dispatch) => {
+
+dispatch(partnersLoading());
+
 return fetch(baseUrl + 'partners')
     .then(response => {
             if (response.ok) {
@@ -202,3 +205,53 @@ export const addPartners = partners => ({
     type: ActionTypes.ADD_PARTNERS,
     payload: partners
 });
+
+
+//posting feedback
+
+export const postFeedback = (id,firstName,lastName,telnum,email,agree,contactType,message) => dispatch =>  {
+    
+    const newFeedback = {
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        telnum: telnum,
+        email: email,
+        agree: false,
+        contactType: contactType,
+        message: message,
+        
+
+    };
+
+    newFeedback.date = new Date().toISOString();
+
+    return fetch(baseUrl + 'feedback', {
+            method: "POST", //by default the HTTP request method is "GET"
+            body: JSON.stringify(newFeedback),
+            headers: {
+                "Content-Type": "application/json" // so the server knows that the body will be formated as JSON
+            }
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => { throw error; }
+        )
+        // .then(response => response.json())
+        // .then(response => dispatch())
+        .then(response => dispatch (
+            alert('Thank you for your feedback! ' + JSON.stringify(newFeedback))
+             ))
+
+        .catch(error => {
+            console.log('post feedback', error.message);
+            alert('Your feedback could not be posted\nError: ' + error.message);
+        })
+}
