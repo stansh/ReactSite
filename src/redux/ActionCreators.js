@@ -209,17 +209,18 @@ export const addPartners = partners => ({
 
 //posting feedback
 
-export const postFeedback = (id,firstName,lastName,telnum,email,agree,contactType,message) => dispatch =>  {
+export const postFeedback = (campsiteId,firstName,lastName,telnum,email,agree,contactType,message) => dispatch => {
     
     const newFeedback = {
-        id: id,
+        campsiteId: campsiteId,
         firstName: firstName,
         lastName: lastName,
         telnum: telnum,
         email: email,
-        agree: false,
+        agree: agree,
         contactType: contactType,
-        message: message,
+        message: message
+        
         
 
     };
@@ -227,7 +228,7 @@ export const postFeedback = (id,firstName,lastName,telnum,email,agree,contactTyp
     newFeedback.date = new Date().toISOString();
 
     return fetch(baseUrl + 'feedback', {
-            method: "POST", //by default the HTTP request method is "GET"
+            method: "POST",
             body: JSON.stringify(newFeedback),
             headers: {
                 "Content-Type": "application/json" // so the server knows that the body will be formated as JSON
